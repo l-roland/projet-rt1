@@ -34,6 +34,7 @@ void main(){
 	if (strcmp(buffer,"coucou")==0){
 		recv(clientSocket, buffer, 1024, 0);
 		printf("Récéption : %s\n",buffer);
+		printf("Fermeture du client\n");
 	}
 	else
 	{
