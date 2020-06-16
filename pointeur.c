@@ -1,9 +1,13 @@
 #include <stdio.h>
 
+void address (int *k){
+ printf("%p\n",k);
+ printf("%d\n",*k);
+
+}
+
 int main() {
  int a = 2;
- int *b = &a;
- printf("%p\n",b);
- printf("%d\n",*b);
+ address(&a);
  return 0;
 }
