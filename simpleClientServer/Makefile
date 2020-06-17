@@ -7,4 +7,4 @@ server : server.c
 	gcc -Wall server.c -o server
 
 clean:
-	rm -rf pointeur client server
+	rm -rf client server
