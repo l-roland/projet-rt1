@@ -43,8 +43,4 @@ void main(){
 	{
 		printf("Fermeture du serveur\n");
 	}
-	
-
-
-
 }
