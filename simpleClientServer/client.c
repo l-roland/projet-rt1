@@ -40,5 +40,4 @@ void main(){
 	{
 		printf("Fermeture du client\n");
 	}
-	
 }
