@@ -54,6 +54,12 @@ int main(){
 		{
 			printf("Pas de réception\n");
 		}
+		if (recv(clientSocket, buffer, 1024, 0)){
+			printf("Récéption broadcast: %s\n",buffer);
+		}
+		else{
+			printf("Pas de récéption broadcast: %s\n",buffer);
+		}
 	}
 
 	return 0;
