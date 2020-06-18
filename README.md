@@ -20,7 +20,9 @@
 - *Ecrire un exemple client / serveur avec :*
     - *Le client qui envoie "coucou" au serveur*
     - *Le serveur qui répond "Bonjour" à chaque coucou reçu ( et rien si ce n'est pas un coucou)*
-
+*=>  Etape 4 *
+- *tester votre programme avec 1 serveur et 5 clients simultanés*
+- *modifier votre programme afin que tous les clients reçoivent le "bonjour" lorsque l'un d'entre eux emet un coucou*
 
 ## Etape 1
 
