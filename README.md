@@ -7,7 +7,7 @@
     - *Clone(modifié)*
     - *Commit*
     - *Push*
-- *Pull*
+    - *Pull*
 - *Mettre en place un repository Git sur votre compte pour le projet*
 - *Ajouter le compte SebDruon comme collaborateur à votre projet*
 
