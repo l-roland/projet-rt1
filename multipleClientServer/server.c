@@ -26,10 +26,10 @@ int main(){
 
 	sockfd = socket(AF_INET, SOCK_STREAM, 0);
 	if(sockfd < 0){
-		printf("[-]Error in connection.\n");
+		printf("Erreur de connexion\n");
 		exit(1);
 	}
-	printf("[+]Server Socket is created.\n");
+	printf("serveur PROJET\n");
 
 	memset(&serverAddr, '\0', sizeof(serverAddr));
 	serverAddr.sin_family = AF_INET;
@@ -40,15 +40,15 @@ int main(){
 
 	ret = bind(sockfd, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 	if(ret < 0){
-		printf("[-]Error in binding.\n");
+		printf("Erreur de bind\n");
 		exit(1);
 	}
-	printf("[+]Bind to port %d\n", 4444);
+	printf("Port %d\n", 4444);
 
 	if(listen(sockfd, 10) == 0){
-		printf("[+]Listening....\n");
+		printf("En écoute...\n");
 	}else{
-		printf("[-]Error in binding.\n");
+		printf("Erreur lors de l'écoute\n");
 	}
 
 
@@ -60,30 +60,30 @@ int main(){
         else
         {
             nb_client++;
-            for (int i = 0; i < 5; i++) 
+            for (int i = 1; i < 6; i++) 
             {
                 //if position is empty
                 if( client[i] == 0 )
                 {
                     client[i] = newSocket;
-                    printf("Adding to list of sockets as %d\n" , i);
+                    printf("Connexion du socket %d\n" , i);
+					printf("Nombre de clients connectés : %d\n",nb_client);
                     break;
                 }
             }
         }
         
-		printf("Connection accepted from %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
-        printf("Nombre de clients connectés : %d\n",nb_client);
+		printf("Nouvelle connexion sur le serveur %s:%d\n", inet_ntoa(newAddr.sin_addr), ntohs(newAddr.sin_port));
+        
 		if((childpid = fork()) == 0){
 			close(sockfd);
-
 			while(1){
 				recv(newSocket, buffer, 1024, 0);
 				printf("Récéption : %s\n",buffer);
                 
 	            if (strcmp(buffer,"coucou")==0){
 		            strcpy(buffer, "Bonjour");
-                    for (int i = 0; i < 5; i++) 
+                    for (int i = 1; i < 6; i++) 
                     {
                         send(client[i], buffer, strlen(buffer),0);
                     }
@@ -95,6 +95,7 @@ int main(){
                 else if (strcmp(buffer,"exit")==0){
                     printf("Client déconnecté\n");
                     nb_client--;
+					break;
 	            }
 	            else 
 	            {
