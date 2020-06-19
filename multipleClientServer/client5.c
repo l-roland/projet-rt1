@@ -18,10 +18,10 @@ int main(){
 
 	clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 	if(clientSocket < 0){
-		printf("[-]Error in connection.\n");
+		printf("Erreur de socket\n");
 		exit(1);
 	}
-	printf("[+]Client Socket is created.\n");
+	printf("Client 5 PROJET\n");
 
 	memset(&serverAddr, '\0', sizeof(serverAddr));
 	serverAddr.sin_family = AF_INET;
@@ -30,10 +30,10 @@ int main(){
 
 	ret = connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
 	if(ret < 0){
-		printf("[-]Error in connection.\n");
+		printf("Erreur de connexion\n");
 		exit(1);
 	}
-	printf("[+]Connected to Server.\n");
+	printf("Connecté au serveur\n");
 	while(1){		
 		memset (buffer, 0, sizeof (buffer));
 		printf("Dites quelque chose : ");
