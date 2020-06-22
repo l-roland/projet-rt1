@@ -53,7 +53,7 @@ début
 	fin tant que
 fin
 ```
-- Algorithme simplifié du client qui peut être exécuté plusieurs fois
+- Algorithme simplifié du client (peut être exécuté plusieurs fois tant qu'on n'atteind pas le nombre max de client connectés au serveur)
 
 ```
 début
