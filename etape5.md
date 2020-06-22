@@ -3,6 +3,10 @@ Le protocole utilisé pour le client/serveur est le TCP car SOCK_STREAM est util
 - Sitographie :
 	- https://broux.developpez.com/articles/c/sockets/
 
+- Diagramme UML 1 serveur 2 clients
+
+![](https://i.imgur.com/tCHJKk1.png)
+
 - Algorithme simplifié du serveur
 
 ```
