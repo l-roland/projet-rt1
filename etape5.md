@@ -1,6 +1,6 @@
 Le protocole utilisé pour le client/serveur est le TCP car SOCK_STREAM est utilisé. Si on veut utiliser de l'UDP on utilisera SOCK_DGRAM.
 
-- Algorithme simplifié 
+- Algorithme simplifié du serveur
 
 ```
 début
@@ -46,6 +46,7 @@ début
 	fin tant que
 fin
 ```
+- Algorithme simplifié du client qui peut être exécuté plusieurs fois
 
 ```
 début
@@ -70,12 +71,4 @@ début
 		quand le client reçoit un message, on crée un thread pour cette récéption.
 	fin tant que
 fin
-```
-
-```sequence
-Alice->Bob: Hello Bob, how are you?
-Note right of Bob: Bob thinks
-Bob-->Alice: I am good thanks!
-Note left of Alice: Alice responds
-Alice->Bob: Where have you been?
 ```
