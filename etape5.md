@@ -76,6 +76,9 @@ début
 	tant que 1
 		quand le client envoi un message, on crée un thread pour cet envoi.
 		quand le client reçoit un message, on crée un thread pour cette récéption.
+		si buffer <- saisie de "exit"
+			envoi de buffer au serveur
+			arrêter le programme
 	fin tant que
 fin
 ```
