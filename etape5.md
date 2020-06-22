@@ -1,4 +1,4 @@
-Le protocole utilisé pour le client/serveur est le TCP car SOCK_STREAM est utilisé. Si on veut utiliser de l'UDP on utilisera SOCK_DGRAM.
+Le protocole utilisé pour le client/serveur est le TCP (layer Transport) car SOCK_STREAM est utilisé. Si on veut utiliser de l'UDP on utilisera SOCK_DGRAM.
 
 - Sitographie :
 	- https://broux.developpez.com/articles/c/sockets/
