@@ -37,7 +37,7 @@ void catch_ctrl_c_and_exit(int sig) {
 
 void send_msg_handler() {
   char message[LENGTH] = {};
-	char buffer[LENGTH + 32] = {};
+	char buffer[LENGTH + 256] = {};
 
   while(1) {
   	str_overwrite_stdout();
