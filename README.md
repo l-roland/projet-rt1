@@ -340,9 +340,14 @@ void main(){
 }
 ```
 
-3/ Sitographie
+### 3/ Sitographie
 
 - https://forums.commentcamarche.net/forum/affich-21222642-faire-un-if-avec-un-char
 - http://sdz.tdct.org/sdz/les-sockets.html
 - https://github.com/nikhilroxtomar/tcp-client-server-in-C
 
+## Etape 4
+
+### 1/ Sitographie
+
+- https://discordapp.com/channels/@me/292007644195979265/724516066180464721
