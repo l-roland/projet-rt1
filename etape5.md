@@ -5,7 +5,7 @@ Le protocole utilisé pour le client/serveur est le TCP (layer Transport) car SO
 
 - Diagramme UML 1 serveur 2 clients
 
-![](https://i.imgur.com/tCHJKk1.png)
+![](https://i.imgur.com/RmFrXmB.png)
 
 - Algorithme simplifié du serveur
 
