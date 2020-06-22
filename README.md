@@ -30,7 +30,7 @@
 - *Vous ajouterez ce document en pdf à votre projet*
 
 *=>  Etape 6*
-*Implementer, la partie de votre protocole qui correspond à l'inscription des clients sur le serveur et aux différents flux.*
+- *Implementer, la partie de votre protocole qui correspond à l'inscription des clients sur le serveur et aux différents flux.*
 
 ## Etape 1
 
@@ -350,4 +350,4 @@ void main(){
 
 ### 1/ Sitographie
 
-- https://discordapp.com/channels/@me/292007644195979265/724516066180464721
+- https://github.com/nikhilroxtomar/Chatroom-in-C
