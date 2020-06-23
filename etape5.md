@@ -5,7 +5,7 @@ Le protocole utilisé pour le client/serveur est le TCP (layer Transport) car SO
 
 - Diagramme UML 1 serveur 2 clients
 
-![](https://i.imgur.com/RmFrXmB.png)
+![](https://imgur.com/4cBs9y0.png)
 
 - Algorithme simplifié du serveur
 
@@ -13,6 +13,7 @@ Le protocole utilisé pour le client/serveur est le TCP (layer Transport) car SO
 début
 	ajout des librairies socket et pthread + autres librairies pour le fonctionnement du programme
 	déclaration de la taille du buffer à 2048
+	déclaration de la variable sub à 0
 	déclaration du nombre max de client à 100
 	déclaration des paramètres du socket
 		AF_INET <- IPv4
@@ -46,8 +47,16 @@ début
 				buffer <- <nom_client> a quitté le serveur
 				envoi à tous les clients le message contenu dans le buffer
 				on enlève 1 au nombre max de clients
+				
+			sinon si buffer="sub <username_clientX>"
+				sub <- +1
+				envoyer les messages émis par username_clientX au clients abonnés quand il en envoie un
+			sinon si buffer="unsub <username_clientX>"
+				sub <- -1
+				ne plus envoyer les messages émis par username_clientX au clients abonnés quand il en envoie un
 			sinon 
 				afficher erreur
+			
 			fermeture du thread et du socket
 		fin tant que
 	fin tant que
@@ -59,6 +68,7 @@ fin
 début
 	ajout des librairies socket et pthread + autres librairies pour le fonctionnement du programme
 	déclaration de la taille du buffer à 2048
+	déclaration de la variable sub à 0
 	déclaration du nombre max de client à 100
 	saisie utilisateur de username client
 	déclaration des paramètres du socket
@@ -79,6 +89,12 @@ début
 		si buffer <- saisie de "exit"
 			envoi de buffer au serveur
 			arrêter le programme
+		sinon si buffer <- saisie de "sub <username_clientX>"
+			sub <- +1
+			recevoir les messages émis par username_clientX au clients abonnés quand il en envoie un
+		sinon si buffer <- saisie de "unsub <username_clientX>"
+			sub <- -1
+			ne plus recevoir les messages émis par username_clientX aux clients abonnés quand il en envoie un
 	fin tant que
 fin
 ```
