@@ -2,6 +2,7 @@
 
 - En ce qui concerne le format des messages evoyés, tous ces messages échangés entre le serveur et les différents clients seront stockés dans la chaîne de caractères (char) buffer que l'on a initialisé avec une taille de 2048, ce qui sera largement suffisant pour envoyer même un long message.
 Lors de l'envoi, le buffer va calculer le nombre de caractère insérés par l'utilsiateur afin d'en déduire la taille de la chaîne de caractères pour ne pas qu'elle fasse tout le temps 2048 en taille.
+On peut aussi retrouvé du int pour le port ou pour la connexion de sockets
 
 - Sitographie :
 	- https://broux.developpez.com/articles/c/sockets/
