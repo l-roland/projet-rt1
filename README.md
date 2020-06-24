@@ -32,11 +32,15 @@
 *=>  Etape 6*
 - *Implementer, la partie de votre protocole qui correspond à l'inscription des clients sur le serveur et aux différents flux.*
 
+*=>  Etape 7*
+- *Implémenter le desabonnement des clients.*
+- *Faire en sorte que le client ( et le serveur ) soit ergonomique en utilisant des parametres sur la ligne de commande*
+
 ## Etape 1
 
 ### 1/ Création d'un compte github personnel
 
-Je me crée un compte GitHub avec le pseudo l-roland. J’utiliserai mon mail etu.umontpellier.fr.
+Je me crée un compte GitHub avec le pseudo l-roland.
 
 ![](https://i.imgur.com/kXX1DQx.png)
 
@@ -117,6 +121,7 @@ Merge made by the 'recursive' strategy.
 #### 4- Push
 ```
 root@louis-TUF:/home/louis# git remote add origin https://github.com/l-roland/projet-rt1.git
+
 root@louis-TUF:/home/louis# git push origin master
 Username for 'https://github.com': l-roland
 Password for 'https://l-roland@github.com':
@@ -215,132 +220,7 @@ root@louis-TUF:/home/louis# git push origin master
 
 ## Etape 3
 
-
-### 1/ Documentation socket
-
-http://sdz.tdct.org/sdz/les-sockets.html
-
-### 2/ Exemple Client/Serveur
-
-- Contenu de ```Makefile```
-
-```
-all : pointeur client server
- 
-pointeur : pointeur.c
-        gcc -Wall pointeur.c -o pointeur
- 
-client : client.c
-        gcc -Wall client.c -o client
- 
-server : server.c
-        gcc -Wall server.c -o server
- 
-clean:
-        rm -rf pointeur client server
-```
-
-- Contenu de ```client.c```
-
-```
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
-#define PORT 4444
-
-void main(){
-	
-	int clientSocket;
-	char msg[1024];
-	struct sockaddr_in serverAddr;
-	char buffer[1024];
-
-	clientSocket = socket(PF_INET, SOCK_STREAM, 0);
-	printf("Client PROJET\n");
-
-	memset(&serverAddr, '\0', sizeof(serverAddr));
-	serverAddr.sin_family = AF_INET;
-	serverAddr.sin_port = htons(PORT);
-	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-
-	connect(clientSocket, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
-	printf("Connecté au Serveur\n");
-
-	printf("Dites quelque chose : ");
-  	scanf("%s", msg);
-	strcpy(buffer, msg);
-	send(clientSocket, buffer, strlen(buffer), 0);
-	printf("Envoi : %s\n",buffer);
-	if (strcmp(buffer,"coucou")==0){
-		recv(clientSocket, buffer, 1024, 0);
-		printf("Récéption : %s\n",buffer);
-		printf("Fermeture du client\n");
-	}
-	else
-	{
-		printf("Fermeture du client\n");
-	}
-	
-}
-```
-
-- Contenu de ```server.c```
-
-```
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/socket.h>
-#include <sys/types.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-
-#define PORT 4444
-
-void main(){
-
-	int sockfd;
-	struct sockaddr_in serverAddr;
-
-	int newSocket;
-	struct sockaddr_in newAddr;
-
-	socklen_t addr_size;
-	char buffer[1024];
-
-	sockfd = socket(AF_INET, SOCK_STREAM, 0);
-	printf("Serveur PROJET\n");
-	memset(&serverAddr, '\0', sizeof(serverAddr));
-
-	serverAddr.sin_family = AF_INET;
-	serverAddr.sin_port = htons(PORT);
-	serverAddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-
-	bind(sockfd, (struct sockaddr*)&serverAddr, sizeof(serverAddr));
-	listen(sockfd, 5);
-	printf("En écoute\n");
-	newSocket = accept(sockfd, (struct sockaddr*)&newAddr, &addr_size);
-	recv(newSocket, buffer, 1024, 0);
-	printf("Récéption : %s\n",buffer);
-	if (strcmp(buffer,"coucou")==0){
-		strcpy(buffer, "Bonjour");
-		send(newSocket, buffer, strlen(buffer), 0);
-		printf("Envoi : %s\n",buffer);
-		printf("Fermeture du serveur\n");
-	}
-	else
-	{
-		printf("Fermeture du serveur\n");
-	}
-}
-```
-
-### 3/ Sitographie
+### 1/ Sitographie
 
 - https://forums.commentcamarche.net/forum/affich-21222642-faire-un-if-avec-un-char
 - http://sdz.tdct.org/sdz/les-sockets.html
@@ -351,3 +231,128 @@ void main(){
 ### 1/ Sitographie
 
 - https://github.com/nikhilroxtomar/Chatroom-in-C
+
+## Etape 5 
+
+### 1/ Protocole
+- Le protocole utilisé pour le client/serveur est le TCP (layer Transport) car SOCK_STREAM est utilisé. Si on veut utiliser de l'UDP on utilisera SOCK_DGRAM.
+
+- TCP : Le protocole TCP est un protocole dit connecté. Il contrôle si le paquet est arrivé à destination si ce n'est pas le cas il le renvoie. 
+
+- UDP : À la différence de TCP, UDP est un protocole en mode non connecté, il ne vérifie pas si le paquet est arrivé à destination.
+
+### 2/ Format
+- En ce qui concerne le format des messages evoyés, tous ces messages échangés entre le serveur et les différents clients seront stockés dans la chaîne de caractères (char) buffer que l'on a initialisé avec une taille de 2048, ce qui sera largement suffisant pour envoyer même un long message.
+
+- Lors de l'envoi, le buffer va calculer le nombre de caractère insérés par l'utilsiateur afin d'en déduire la taille de la chaîne de caractères pour ne pas qu'elle fasse tout le temps 2048 en taille.
+
+- On retrouve aussi du int pour le port ou la validation de socket, une structure pour les paramètres et la connexion de sockets ou encore une variable pthread_t qui va gérer les différents threads.
+
+### 3/ Diagramme UML 1 serveur 2 clients
+
+![](https://imgur.com/sJ0b2u4.png)
+
+### 4/ Algorithme simplifié du serveur
+```
+début
+	ajout des librairies socket et pthread + autres librairies pour le fonctionnement du programme
+	déclaration de la taille du buffer à 2048
+	déclaration de la variable sub à 0
+	déclaration du nombre max de client à 100
+	déclaration des paramètres du socket
+		AF_INET <- IPv4
+		SOCK_STREAM <- TCP
+		PORT <- 4444
+		IP <- 127.0.0.1 (loopback)
+	si mauvaise initialiation, mauvaise liaison client/serveur et mauvaise écoute du socket
+		afficher erreur et quitter
+	sinon
+		continuer le programme
+	tant que 1
+		quand un client se connecte au serveur, on ajoute 1 au nombre max de client puis on crée un thread pour ce client.
+		limite utilisation du CPU à 1
+		si récéption de username client stocké dans le buffer
+			name <- username client
+			envoyer à tous les clients connectés que le client est connecté
+		sinon
+			afficher erreur
+		formatage du buffer
+		tant que 1
+			initialisation de la variable recep
+			si réception  message stocké dans le buffer > 0
+				si longueur du buffer > 0
+					si buffer = "coucou"
+						buffer <- Bonjour
+						envoi à tous les clients le message contenu dans le buffer (cad Bonjour)
+					sinon
+						envoi du message contenu dans le buffer au client qui a envoyé le message
+					fin si
+			sinon si réception message stocké dans le buffer == 0 ou si buffer = "exit")
+				buffer <- <nom_client> a quitté le serveur
+				envoi à tous les clients le message contenu dans le buffer
+				on enlève 1 au nombre max de clients
+				
+			sinon si buffer="sub <username_clientX>"
+				créer un thread de subscription
+				sub <- +1
+				envoyer les messages émis par username_clientX au clients abonnés quand il en envoie un
+			sinon si buffer="unsub <username_clientX>"
+				fermer le thread de subscription
+				sub <- -1
+				ne plus envoyer les messages émis par username_clientX au clients abonnés quand il en envoie un
+			sinon 
+				afficher erreur
+			
+			fermeture du thread et du socket
+		fin tant que
+	fin tant que
+fin
+```
+### 5/ Algorithme simplifié du client (peut être exécuté plusieurs fois tant qu'on n'atteind pas le nombre max de client connectés au serveur)
+
+```
+début
+	ajout des librairies socket et pthread + autres librairies pour le fonctionnement du programme
+	déclaration de la taille du buffer à 2048
+	déclaration de la variable sub à 0
+	déclaration du nombre max de client à 100
+	saisie utilisateur de username client
+	déclaration des paramètres du socket
+		AF_INET <- IPv4
+		SOCK_STREAM <- TCP
+		PORT <- 4444
+		IP <- 127.0.0.1 (loopback)
+	si mauvaise connexion au serveur
+		afficher erreur et quitter
+	sinon
+		continuer le programme
+	fin si
+	envoi de username client au serveur
+	
+	tant que 1
+		quand le client envoi un message, on crée un thread pour cet envoi.
+		quand le client reçoit un message, on crée un thread pour cette récéption.
+		si buffer <- saisie de "exit"
+			envoi de buffer au serveur
+			arrêter le programme
+		sinon si buffer <- saisie de "sub <username_clientX>"
+			créer un thread de subscription
+			sub <- +1
+			recevoir les messages émis par username_clientX au clients abonnés quand il en envoie un
+		sinon si buffer <- saisie de "unsub <username_clientX>"
+			fermer le thread de subscription
+			sub <- -1
+			ne plus recevoir les messages émis par username_clientX aux clients abonnés quand il en envoie un
+	fin tant que
+fin
+```
+
+### 6- Sitographie
+
+- https://broux.developpez.com/articles/c/sockets/
+
+
+
+
+
+
