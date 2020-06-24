@@ -74,8 +74,9 @@ void recv_msg_handler() {
 }
 
 int main(int argc, char **argv){
-	if(argc != 2){
-		printf("Usage: %s <port>\n", argv[0]);
+	if(argc != 3){
+		printf("Usage: %s <port> <username>\n", argv[0]);
+
 		return EXIT_FAILURE;
 	}
 
@@ -84,8 +85,7 @@ int main(int argc, char **argv){
 
 	signal(SIGINT, catch_ctrl_c_and_exit);
 
-	printf("Please enter your name: ");
-  fgets(name, 32, stdin);
+	strcpy(name,argv[2]);
   str_trim_lf(name, strlen(name));
 
 
