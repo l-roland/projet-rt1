@@ -108,6 +108,7 @@ void *handle_client(void *arg){
 	char buff_out[BUFFER_SZ];
 	char name[32];
 	int leave_flag = 0;
+	pthread_t sub;
 
 	cli_count++;
 	client_t *cli = (client_t *)arg;
@@ -139,9 +140,16 @@ void *handle_client(void *arg){
 					str_trim_lf(buff_out, strlen(buff_out));
 					printf("%s -> %s\n", buff_out, cli->name);
 				}
+				//else if (strcmp(buff_out,cli->name)) {
+					//pthread_create(&sub, NULL, &handle_client, (void*)cli->name);
+					//printf("%s inscrit\n",cli->name);
+				//}
+				//else if (strcmp(buff_out,"unsub")) {
+					//printf("désinscrit\n");
+				//}
 				else
 				{
-					send_message(buff_out, cli->uid);
+					send_message(buff_out, cli->sockfd);
 					str_trim_lf(buff_out, strlen(buff_out));
 					printf("%s -> %s\n", buff_out, cli->name);
 				}
