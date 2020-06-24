@@ -141,7 +141,7 @@ void *handle_client(void *arg){
 				}
 				else
 				{
-					send_message(buff_out, cli->sockfd);
+					send_message(buff_out, cli->uid);
 					str_trim_lf(buff_out, strlen(buff_out));
 					printf("%s -> %s\n", buff_out, cli->name);
 				}
