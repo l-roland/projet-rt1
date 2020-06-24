@@ -1,11 +1,14 @@
-Le protocole utilisé pour le client/serveur est le TCP (layer Transport) car SOCK_STREAM est utilisé. Si on veut utiliser de l'UDP on utilisera SOCK_DGRAM.
+- Le protocole utilisé pour le client/serveur est le TCP (layer Transport) car SOCK_STREAM est utilisé. Si on veut utiliser de l'UDP on utilisera SOCK_DGRAM.
+
+- En ce qui concerne le format des messages evoyés, tous ces messages échangés entre le serveur et les différents clients seront stockés dans la chaîne de caractères (char) buffer que l'on a initialisé avec une taille de 2048, ce qui sera largement suffisant pour envoyer même un long message.
+Lors de l'envoi, le buffer va calculer le nombre de caractère insérés par l'utilsiateur afin d'en déduire la taille de la chaîne de caractères pour ne pas qu'elle fasse tout le temps 2048 en taille.
 
 - Sitographie :
 	- https://broux.developpez.com/articles/c/sockets/
 
 - Diagramme UML 1 serveur 2 clients
 
-![](https://imgur.com/4cBs9y0.png)
+![](https://imgur.com/a/nJ4ZnID.png)
 
 - Algorithme simplifié du serveur
 
@@ -49,9 +52,11 @@ début
 				on enlève 1 au nombre max de clients
 				
 			sinon si buffer="sub <username_clientX>"
+				créer un thread de subscription
 				sub <- +1
 				envoyer les messages émis par username_clientX au clients abonnés quand il en envoie un
 			sinon si buffer="unsub <username_clientX>"
+				fermer le thread de subscription
 				sub <- -1
 				ne plus envoyer les messages émis par username_clientX au clients abonnés quand il en envoie un
 			sinon 
@@ -90,9 +95,11 @@ début
 			envoi de buffer au serveur
 			arrêter le programme
 		sinon si buffer <- saisie de "sub <username_clientX>"
+			créer un thread de subscription
 			sub <- +1
 			recevoir les messages émis par username_clientX au clients abonnés quand il en envoie un
 		sinon si buffer <- saisie de "unsub <username_clientX>"
+			fermer le thread de subscription
 			sub <- -1
 			ne plus recevoir les messages émis par username_clientX aux clients abonnés quand il en envoie un
 	fin tant que
