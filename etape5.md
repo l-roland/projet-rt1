@@ -8,7 +8,7 @@ Lors de l'envoi, le buffer va calculer le nombre de caractère insérés par l'u
 
 - Diagramme UML 1 serveur 2 clients
 
-![](https://imgur.com/a/nJ4ZnID.png)
+![](https://imgur.com/sJ0b2u4.png)
 
 - Algorithme simplifié du serveur
 
