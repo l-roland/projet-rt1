@@ -250,7 +250,7 @@ root@louis-TUF:/home/louis# git push origin master
 
 ### 3/ Diagramme UML 1 serveur 2 clients
 
-![](https://imgur.com/sJ0b2u4.png)
+![](https://imgur.com/wVeNMTP.png)
 
 ### 4/ Algorithme simplifié du serveur
 ```
