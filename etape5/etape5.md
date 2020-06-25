@@ -15,7 +15,7 @@
 
 - Diagramme UML 1 serveur 2 clients
 
-![](https://imgur.com/sJ0b2u4.png)
+![](https://imgur.com/wVeNMTP.png)
 
 - Algorithme simplifié du serveur
 
